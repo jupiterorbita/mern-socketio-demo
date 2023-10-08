@@ -2,7 +2,7 @@ import "./App.css";
 import logo_img from "./static/sm_logo.png";
 import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
-import Filter from 'bad-words'
+import Filter from 'bad-words';
 // const Filter = require("bad-words"); // maybe comment it out
 
 function App() {
@@ -93,6 +93,17 @@ function App() {
         return [...prevStateData, dataArr];
       });
     });
+
+    // close useEffect and stop socket from listening to these events
+    // return () => {
+    //   socket.off('receive_message');
+    //   socket.off('disconnected_user');
+    //   socket.off('roomUsers');
+    //   socket.off('message_from_server');
+    //   socket.off('server says - heres your data');
+    // };
+    return () => socket.disconnect(true);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
